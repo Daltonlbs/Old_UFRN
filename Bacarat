@@ -1,0 +1,212 @@
+funcao nomecarta (numero CJ) retorna texto
+  se CJ == 1
+    retorne "As"
+  senaose CJ == 2
+    retorne "2"
+  senaose CJ == 3
+    retorne "3"
+  senaose CJ == 4
+    retorne "4"
+  senaose CJ == 5
+    retorne "5"
+  senaose CJ == 6
+    retorne "6"
+  senaose CJ == 7
+    retorne "7"
+  senaose CJ == 8
+    retorne "8"
+  senaose CJ == 9
+    retorne "9"
+  senaose CJ == 10
+    retorne "10"
+  senaose CJ == 11
+    retorne  "Valete"
+  senaose CJ == 12
+    retorne "Dama"
+  senaose CJ == 0
+    retorne "Rei"
+  fim
+fim 
+
+
+funcao nrepete (numero X, numero [] CJ, inteiro i) retorna booleano
+  booleano rep = falso
+  inteiro n=1 
+  repita enquanto rep == falso e n<=6
+    se i == n
+      n=n+1
+    fim
+    se X == CJ [n]
+      rep = verdadeiro
+    fim
+    n=n+1
+  fim
+  retorne rep
+fim
+
+funcao transinteiro (numero X) retorna inteiro
+  retorne X
+fim
+
+
+
+
+funcao valorcarta (numero CJ) retorna inteiro
+  se CJ <=10
+    CJ=CJ
+  senao
+    CJ=0
+  fim
+retorne CJ
+fim
+
+
+
+texto J1, J2, pausa
+numero [ ] CJ
+inteiro i, PJ1, PJ2
+sementesorteio()
+
+
+CJ = novo numero[7]
+
+
+i=1
+escreva ("BACARAT")
+escreva ("Insira o nome do jogador 1")
+leia (J1)
+escreva ("Insira o nome do jogador 2")
+leia (J2)
+
+
+
+repita enquanto i<=7
+  CJ[i] = 0
+  i=i+1
+fim
+
+i=1
+
+repita enquanto i<=6
+  CJ[i] = sorteie(52)
+  escreva (CJ[i])    
+  se nrepete( CJ[i], CJ, i)
+    i=i-1
+  senao
+    i=i
+  fim
+  i=i+1
+fim
+
+i=1
+
+repita enquanto i<=6
+  CJ[i] = transinteiro (CJ[i]) mod 13
+  i=i+1
+escreva (CJ[i])
+fim
+
+
+
+
+
+
+
+PJ1 = (valorcarta(CJ[1]) +  valorcarta(CJ[2])) mod 10
+
+PJ2 = (valorcarta(CJ[3]) +  valorcarta(CJ[4])) mod 10
+
+escreva (J1, "recebeu")
+escreva ( nomecarta(CJ[1]), nomecarta(CJ[2]), "Pontos:" PJ1 )
+
+escreva (J2, "recebeu")
+escreva ( nomecarta(CJ[3]), nomecarta(CJ[4]), "Pontos:" PJ2)
+
+se PJ1 >= 8 e PJ2 == PJ1
+  escreva ("O jogo terminou empatado")
+senaose PJ1 == 9 e PJ2 nao= PJ1
+  escreva (J1, "ganhou o jogo")
+senaose PJ2 == 9 e PJ1 nao= PJ2
+  escreva (J2, "ganhou o jogo")
+senaose PJ2 == 8 e PJ1 nao= PJ2
+  escreva (J2, "ganhou o jogo")
+fim
+
+se PJ1 >= 8 ou PJ2 >= 8
+  escreva ("FIM DO JOGO")
+senao
+  escreva ("Havera uma segunda rodada")
+  escreva ("Aperte enter para continuar")
+  leia(pausa)
+  se PJ1 ==6 ou PJ1 == 7
+    CJ[5] = 0
+    escreva (J1, "nao recebe nova carta")
+    se PJ2 ==6 ou PJ2 ==7
+      CJ[6] = 0
+     escreva (J2, "nao recebe nova carta")
+    senao
+      CJ[6] = CJ[6]
+      escreva(J2, " recebeu:" nomecarta(CJ[6]))
+    fim
+  senao
+    CJ[5] = CJ[5]
+    escreva(J1, " recebeu:" nomecarta(CJ[5]))  
+  fim
+
+  se CJ[5] ==2 ou CJ[5] == 3
+    se PJ2<=4
+      CJ[6] = CJ[6]
+      escreva(J2, " recebeu:" nomecarta(CJ[6]))
+    senao
+      CJ[6] = 0
+      escreva (J2, "nao recebe nova carta")
+    fim
+  senaose CJ[5] ==4 ou CJ[5] == 5
+    se PJ2<=5
+      CJ[6] = CJ[6]
+      escreva(J2, " recebeu:" nomecarta(CJ[6]))
+    senao
+      CJ[6] = 0
+      escreva (J2, "nao recebe nova carta")
+    fim  
+  senaose CJ[5] ==6 ou CJ[5] == 7
+    se PJ2<=6
+      CJ[6] = CJ[6]
+      escreva(J2, " recebeu:" nomecarta(CJ[6]))
+    senao
+      CJ[6] = 0
+      escreva (J2, "nao recebe nova carta")
+    fim
+  senaose CJ[5] ==8
+    se PJ2<=2
+      CJ[6] = CJ[6]
+      escreva(J2, " recebeu:" nomecarta(CJ[6]))
+    senaose CJ[5] ==1 ou CJ[5] == 9 ou CJ[5] == 10
+      CJ[6] = 0
+      escreva (J2, "nao recebe nova carta") 
+   fim
+  senao 
+    se PJ2<=3
+      CJ[6] = CJ[6]
+      escreva(J2, " recebeu:" nomecarta(CJ[6]))
+    senao 
+      CJ[6] = 0
+      escreva (J2, "nao recebe nova carta")
+    fim
+  fim
+
+  PJ1 = (PJ1 +(valorcarta (CJ[5]))) mod 10
+  PJ2 = (PJ2 +(valorcarta (CJ[6])))  mod 10
+
+  escreva (J1, "tem", PJ1, "pontos")
+  escreva (J2, "tem", PJ2, "pontos")
+
+  se PJ1==PJ2
+    escreva("O jogo terminou empatado")
+  senaose PJ1 > PJ2
+    escreva(J1, "ganhou o jogo")
+  senao
+      escreva(J2, "ganhou o jogo")
+  fim
+fim
+
